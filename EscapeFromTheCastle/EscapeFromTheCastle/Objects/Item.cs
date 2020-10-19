@@ -48,28 +48,32 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static string GetName(Item sender)
+        public string GetName()
         {
-            return sender.Name;
+            return Name;
         }
 
-        public static void Describe(Item sender)
+        public void Describe()
         {
-            Console.WriteLine(sender.Description);
+            Console.WriteLine(Description);
         }
 
-        public static void Use(Item sender)
+        public void Use()
         {
-            if (sender.Used == true)
+            if (Used == true)
             {
                 throw new ArgumentException("Item already used");
             }
-            sender.Used = true;
+            Used = true;
         }
 
-        public static bool IsUsed(Item sender)
+        public virtual void Use(Character target)
         {
-            return sender.Used;
+        }
+
+        public bool IsUsed()
+        {
+            return Used;
         }
     }
 
@@ -92,10 +96,10 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static void Use(Food sender, Character eater)
+        public override void Use(Character eater)
         {
-            Character.ModifyHealth(eater, sender.Health);
-            sender.Used = true;
+            eater.ModifyHealth(Health);
+            Used = true;
         }
     }
 
@@ -127,9 +131,9 @@ namespace EscapeFromTheCastle
             Text = text;
         }
 
-        public static void Use(Note sender)
+        public void Use(Note sender)
         {
-            Console.WriteLine(sender.Text);
+            Console.WriteLine(Text);
         }
     }
 
@@ -142,9 +146,9 @@ namespace EscapeFromTheCastle
             Code = code;
         }
 
-        public static string Use(Key sender)
+        public new string Use()
         {
-            return sender.Code;
+            return Code;
         }
     }
 }

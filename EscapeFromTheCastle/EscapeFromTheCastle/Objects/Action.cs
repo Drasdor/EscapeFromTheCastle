@@ -33,12 +33,12 @@ namespace EscapeFromTheCastle
 
         }
 
-        public static void ActionOption(Action sender)
+        public void ActionOption()
         {
-            switch (sender.Type)
+            switch (Type)
             {
                 case "Attack":
-                    Console.WriteLine($"{sender.Name} - R:{sender.Range} D:{(sender.Health * -1)}");
+                    Console.WriteLine($"{Name} - R:{Range} D:{Health * -1}");
                     break;
                 default:
                     throw new ArgumentException("Type does not exist");

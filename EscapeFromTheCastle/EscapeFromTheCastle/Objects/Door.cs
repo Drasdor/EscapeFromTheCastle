@@ -16,20 +16,20 @@ namespace EscapeFromTheCastle
             Code = code;
         }
 
-        private static void UseKey(Door sender, Key k)
+        private void UseKey(Key k)
         {
-            if (sender.Code != Key.Use(k))
+            if (Code != k.Use())
             {
                 throw new Exception("Incorrect Key");
             }
         }
 
-        public static void Unlock(Door sender, Key k)
+        public void Unlock(Key k)
         {
             try
             {
-                UseKey(sender, k);
-                sender.Locked = false;
+                UseKey(k);
+                Locked = false;
                 Console.WriteLine("Unlocked");
             }
             catch
@@ -38,12 +38,12 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static void Lock(Door sender, Key k)
+        public void Lock(Key k)
         {
             try
             {
-                UseKey(sender, k);
-                sender.Locked = true;
+                UseKey(k);
+                Locked = true;
                 Console.WriteLine("Locked");
             }
             catch
@@ -53,9 +53,9 @@ namespace EscapeFromTheCastle
 
         }
 
-        public static bool CheckLock(Door sender)
+        public bool CheckLock()
         {
-            return sender.Locked;
+            return Locked;
         }
     }
 }

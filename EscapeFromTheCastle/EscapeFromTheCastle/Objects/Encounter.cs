@@ -17,27 +17,29 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static void Run(Encounter sender, Team players)
+        public void Run(Team players)
         {
             do
             {
-                int total = CharacterCount(sender, players);
+                int total = CharacterCount(players);
                 for (int i = 0; i < total; i++)
                 {
-                    Turn(sender, i);
-                    Character.ActionMenu(Team.GetCharacter(players, 0));
+                    Turn(i, players);
+                    
                 }
             } while (true);
         }
 
-        public static void Turn(Encounter sender, int index)
+        public void Turn(int index, Team players)
         {
-            Room.DrawRoom(sender.CurrentRoom);
+            CurrentRoom.DrawRoom();
+            Character currentCharacter = players.GetCharacter(index);
+            currentCharacter.ActionMenu();
         }
 
-        public static int CharacterCount(Encounter sender, Team players)
+        public int CharacterCount(Team players)
         {
-            return (Team.GetCount(sender.Enemies) + Team.GetCount(players));
+            return (Enemies.GetCount() + players.GetCount());
         }
     }
 }

@@ -22,32 +22,27 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static char GetChar(Tile sender)
+        public char GetChar()
         {
-            if (sender.Base == '|')
+            if (Base == '|')
             {
                 return '|';
             }
 
-            return sender.Base;
+            return Base;
         }
 
-        public static ConsoleColor GetColour(Tile sender)
+        public ConsoleColor GetColour()
         {
-            char c = Tile.GetChar(sender);
-            switch (c)
+            char c = GetChar();
+            return c switch
             {
-                case '|':
-                    return ConsoleColor.White;
-                case 'X':
-                    return ConsoleColor.DarkGray;
-                case 'C':
-                    return ConsoleColor.DarkYellow;
-                case 'D':
-                    return ConsoleColor.Cyan;
-                default:
-                    throw new ArgumentException("Type does not exist");
-            }
+                '|' => ConsoleColor.White,
+                'X' => ConsoleColor.DarkGray,
+                'C' => ConsoleColor.DarkYellow,
+                'D' => ConsoleColor.Cyan,
+                _ => throw new ArgumentException("Type does not exist"),
+            };
         }
     }
 }

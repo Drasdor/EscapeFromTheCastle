@@ -15,97 +15,96 @@ namespace EscapeFromTheCastle
             Name = name;
         }
 
-        public static void AddCharacter(Team sender, string name, string type)
+        public void AddCharacter(string name, string type)
         {
             Character c = new Character(type, name);
-            sender.Members.Add(c);
-            sender.Health += Character.GetHealth(c);
+            Members.Add(c);
+            Health += c.GetHealth();
         }
 
-        public static void Speak(Team sender, int index)
+        public void Speak(int index)
         {
-            Character.Speak(sender.Members[index]);
+            Members[index].Speak();
         }
 
-        public static void GetHealth(Team sender, int index)
+        public void GetHealth(int index)
         {
-            Character.GetHealth(sender.Members[index]);
+            Members[index].GetHealth();
         }
 
-        public static void GetCol(Team sender, int index)
+        public void GetCol(int index)
         {
-            Character.GetCol(sender.Members[index]);
+            Members[index].GetCol();
         }
 
-        public static void GetRow(Team sender, int index)
+        public void GetRow(int index)
         {
-            Character.GetRow(sender.Members[index]);
+            Members[index].GetRow();
         }
 
-        public static void Move(Team sender, int index, int col, int row)
+        public void Move(int index, int col, int row)
         {
-            Character.Move(sender.Members[index], col, row);
+            Members[index].Move(col, row);
         }
 
-        public static void AddToBag(Team sender, int index, Item i)
+        public void AddToBag(int index, Item i)
         {
-            Character.AddToBag(sender.Members[index], i);
+            Members[index].AddToBag(i);
         }
 
-        public static void Describe(Team sender, int index)
+        public void Describe(int index)
         {
-            Character.DescribeBackpack(sender.Members[index]);
+            Members[index].DescribeBackpack();
         }
 
-        public static void UseIndex(Team sender, int charIndex, int itemIndex)
+        public void UseIndex(int charIndex, int itemIndex)
         {
-            Character.UseIndex(sender.Members[charIndex], itemIndex);
-            UpdateHealth(sender);
+            Members[charIndex].UseIndex(itemIndex);
+            UpdateHealth();
         }
 
-        public static void ModifyHealth(Team sender, int index, int change)
+        public void ModifyHealth(int index, int change)
         {
-            int health = Character.GetHealth(sender.Members[index]);
-            int max_health = Character.GetMaxHealth(sender.Members[index]);
+            int health = Members[index].GetHealth();
+            int maxHealth = Members[index].GetMaxHealth();
 
             // Picks the appropriate change of health (accounting for max and 0).
             if (health + change < 1)
             {
-                sender.Health -= health;
+                Health -= health;
             }
-            else if (health + change > max_health)
+            else if (health + change > maxHealth)
             {
-                sender.Health += (max_health - health);
+                Health += (maxHealth - health);
             }
             else
             {
-                sender.Health += change;
+                Health += change;
             }
 
-            Character.ModifyHealth(sender.Members[index], change);
+            Members[index].ModifyHealth(change);
         }
 
-        public static void UpdateHealth(Team sender)
+        public void UpdateHealth()
         {
-            sender.Health = 0;
-            foreach (Character c in sender.Members)
-            {
-                Character.GetHealth(c);
-                sender.Health += 0;
+            Health = 0;
+            foreach (Character c in Members)
+            {                
+                Health += c.GetHealth();
             }
         }
 
-        public static void Transfer(Team sender, int from_player, int to_player, int index)
+        public void Transfer(int fromPlayer, int toPlayer, int index)
         {
-            Character.AddToBag(sender.Members[to_player], Character.GetItem(sender.Members[from_player], index));
-            Character.DropIndex(sender.Members[from_player], index);
+            Members[toPlayer].AddToBag(Members[fromPlayer].GetItem(index));
+            Members[fromPlayer].DropIndex(index);
         }
 
-        public static bool CanLeave(Team sender)
+        public bool CanLeave()
         {
-            foreach (Character c in sender.Members)
+            foreach (Character c in Members)
             {
-                if (Character.OnDoor(c) == false)
+                if (c.OnDoor() == false)
                 {
                     return false;
                 }
@@ -113,23 +112,23 @@ namespace EscapeFromTheCastle
             return true;
         }
 
-        public static Character GetCharacter(Team sender, int index)
+        public Character GetCharacter(int index)
         {
-            return sender.Members[index];
+            return Members[index];
         }
 
-        public static bool IsAlive(Team sender)
+        public bool IsAlive()
         {
-            if (sender.Health < 1)
+            if (Health < 1)
             {
                 return false;
             }
             return true;
         }
 
-        public static int GetCount(Team sender)
+        public int GetCount()
         {
-            return sender.Members.Count;
+            return Members.Count;
         }
     }
 }

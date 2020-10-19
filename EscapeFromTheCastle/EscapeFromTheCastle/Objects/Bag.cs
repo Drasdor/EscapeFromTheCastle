@@ -14,21 +14,21 @@ namespace EscapeFromTheCastle
             MaxBagSize = size;
         }
 
-        public static void Describe(Bag sender)
+        public void Describe()
         {
             Console.Write("I have the following items in my bag: ");
-            foreach (Item i in sender.Contents)
+            foreach (Item i in Contents)
             {
-                Console.Write(Item.GetName(i) + " ");
+                Console.Write(i.GetName() + " ");
             }
             Console.WriteLine();
         }
 
-        public static void Add(Bag sender, Item i)
+        public void Add(Item i)
         {
-            if (sender.Contents.Count < sender.MaxBagSize)
+            if (Contents.Count < MaxBagSize)
             {
-                sender.Contents.Add(i);
+                Contents.Add(i);
             }
             else
             {
@@ -36,47 +36,47 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static void Use(Bag sender, int index)
+        public void Use(int index)
         {
-            Item.Use(sender.Contents[index]);
-            if (Item.IsUsed(sender.Contents[index]) == true)
+            Contents[index].Use();
+            if (Contents[index].IsUsed() == true)
             {
-                sender.Contents.RemoveAt(index);
+                Contents.RemoveAt(index);
             }
         }
 
-        public static void Eat(Bag sender, int index, Character target)
+        public void Eat(int index, Character target)
         {
-            Food.Use((Food)sender.Contents[index], target);
-            if (Item.IsUsed(sender.Contents[index]) == true)
+            Contents[index].Use(target);
+            if (Contents[index].IsUsed() == true)
             {
-                sender.Contents.RemoveAt(index);
+                Contents.RemoveAt(index);
             }
         }
 
-        public static void Read(Bag sender, int index)
+        public void Read(int index)
         {
-            Note.Use(sender.Contents[index]);
+            Contents[index].Use();
         }
 
-        public static void DropIndex(Bag sender, int index)
+        public void DropIndex(int index)
         {
-            sender.Contents.RemoveAt(index);
+            Contents.RemoveAt(index);
         }
 
-        public static void SetSize(Bag sender, int new_size)
+        public void SetSize( int new_size)
         {
-            sender.MaxBagSize = new_size;
+            MaxBagSize = new_size;
         }
 
-        public static int GetLength(Bag sender)
+        public int GetLength()
         {
-            return sender.Contents.Count;
+            return Contents.Count;
         }
 
-        public static Item GetItem(Bag sender, int index)
+        public Item GetItem(int index)
         {
-            return sender.Contents[index];
+            return Contents[index];
         }
     }
 }

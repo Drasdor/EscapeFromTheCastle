@@ -21,7 +21,7 @@ namespace EscapeFromTheCastle
             Health = health;
             MaxHealth = health;
             MaxBagSize = size;
-            Bag.SetSize(Backpack, size);
+            Backpack.SetSize(size);
         }
 
         public Character(string type, string name)
@@ -33,7 +33,7 @@ namespace EscapeFromTheCastle
                     Health = 100;
                     MaxHealth = 100;
                     MaxBagSize = 5;
-                    Bag.SetSize(Backpack, 5);
+                    Backpack.SetSize(5);
                     Actions.Add(new Action("firebolt"));
                     break;
                 default:
@@ -41,98 +41,97 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static void ModifyHealth(Character sender, int modifier)
+        public void ModifyHealth(int modifier)
         {
-            sender.Health += modifier;
+            Health += modifier;
 
-            if (sender.Health < 1)
+            if (Health < 1)
             {
-                sender.Health = 0;
+                Health = 0;
                 throw new ArgumentException("Character has died");
             }
-            if (sender.Health > sender.MaxHealth)
+            if (Health > MaxHealth)
             {
-                sender.Health = sender.MaxHealth;
+                Health = MaxHealth;
             }
         }
 
-        public static int GetHealth(Character sender)
+        public int GetHealth()
         {
-            return sender.Health;
+            return Health;
         }
 
-        public static int GetMaxHealth(Character sender)
+        public int GetMaxHealth()
         {
-            return sender.MaxHealth;
+            return MaxHealth;
         }
 
-        public static int GetCol(Character sender)
+        public int GetCol()
         {
-            return sender.Location[0];
+            return Location[0];
         }
 
-        public static int GetRow(Character sender)
+        public int GetRow()
         {
-            return sender.Location[1];
+            return Location[1];
         }
 
-        public static void Speak(Character sender)
+        public void Speak()
         {
-            Console.WriteLine("My name is " + sender.Name);
+            Console.WriteLine("My name is " + Name);
         }
 
-        public static void Move(Character sender, int col, int row)
+        public void Move(int col, int row)
         {
-            if (sender.Location[0] + col < 0 || sender.Location[0] + row < 0)
+            if (Location[0] + col < 0 || Location[0] + row < 0)
             {
                 throw new ArgumentException($"Move ({col}, {row}) takes player outside of room!", "original");
             }
 
-            sender.Location[0] = sender.Location[0] + col;
-            sender.Location[1] = sender.Location[1] + row;
+            Location[0] = Location[0] + col;
+            Location[1] = Location[1] + row;
         }
 
-        public static void AddToBag(Character sender, Item i)
+        public void AddToBag(Item i)
         {
-            Bag.Add(sender.Backpack, i);
+            Backpack.Add(i);
         }
 
-        public static void DescribeBackpack(Character sender)
+        public void DescribeBackpack()
         {
-            Bag.Describe(sender.Backpack);
+            Backpack.Describe();
         }
 
-        public static void UseIndex(Character sender, int index)
+        public void UseIndex(int index)
         {
-            // I will try to do a switch using the get type function at some point
-            Bag.Use(sender.Backpack, index);
+            Backpack.Use(index);
         }
-        public static void EatIndex(Character sender, int index)
+        public void EatIndex(int index)
         {
-            Bag.Eat(sender.Backpack, index, sender);
-        }
-
-        public static void ReadIndex(Character sender, int index)
-        {
-            Bag.Use(sender.Backpack, index);
+            Backpack.Eat(index, this);
         }
 
-        public static void DropIndex(Character sender, int index)
+        public void ReadIndex(int index)
         {
-            Bag.DropIndex(sender.Backpack, index);
+            Backpack.Use(index);
         }
 
-        public static Item GetItem(Character sender, int index)
+        public void DropIndex(int index)
         {
-            return Bag.GetItem(sender.Backpack, index);
+            Backpack.DropIndex(index);
         }
 
-        public static Boolean OnDoor(Character sender)
+        public Item GetItem(int index)
         {
-            return sender.Door;
+            return Backpack.GetItem(index);
         }
 
-        public static void ActionMenu(Character sender)
+        public Boolean OnDoor()
+        {
+            return Door;
+        }
+
+        public void ActionMenu()
         {
             do
             {
@@ -141,9 +140,9 @@ namespace EscapeFromTheCastle
                     Console.WriteLine("1 - Attack   2 - Use Item");
                     Console.WriteLine("3 - Move     4 - End Turn");
                     string input = Console.ReadLine();
-                    foreach (Action a in sender.Actions)
+                    foreach (Action a in Actions)
                     {
-                        Action.ActionOption(a);
+                        a.ActionOption();
                     }
                 }
                 catch

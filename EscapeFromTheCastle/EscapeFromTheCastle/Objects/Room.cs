@@ -37,20 +37,20 @@ namespace EscapeFromTheCastle
             }
         }
 
-        public static void DrawRoom(Room sender)
+        public void DrawRoom()
         {
-            foreach (List<Tile> row in sender.Tiles)
+            foreach (List<Tile> row in Tiles)
             {
                 foreach (Tile til in row)
                 {
-                    Console.ForegroundColor = Tile.GetColour(til);
-                    Console.Write(Tile.GetChar(til));
+                    Console.ForegroundColor = til.GetColour();
+                    Console.Write(til.GetChar());
                 }
                 Console.WriteLine();
             }
         }
 
-        public static void RoomCreator(string name)
+        public void RoomCreator(string name)
         {
             do
             {
