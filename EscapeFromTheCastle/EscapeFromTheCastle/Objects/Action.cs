@@ -4,46 +4,37 @@ using System.Text;
 
 namespace EscapeFromTheCastle
 {
-    class Action
+    abstract class Action
     {
-        private readonly string Type;
-        private readonly string Name;
-        private readonly int Health;
-        private readonly int Range;
+        protected string Name;
 
         // I might do a file with the actions
 
-        public Action(string name)
+        public abstract void ActionOption();
+    }
+
+    class Attack : Action
+    {
+        protected int Health;
+        protected int Range;
+
+        public Attack(string name)
         {
             switch (name)
             {
-                case "firebolt":
-                    Type = "Attack";
+                case "firebolt":                    
                     Name = "firebolt";
                     Health = -20;
                     Range = 10;
                     break;
                 default:
-                    throw new ArgumentException("Type does not exist");
+                    throw new TypeNotFoundException();
             }
         }
 
-        public Action(string name, int damage)
+        public override void ActionOption()
         {
-
-        }
-
-        public void ActionOption()
-        {
-            switch (Type)
-            {
-                case "Attack":
-                    Console.WriteLine($"{Name} - R:{Range} D:{Health * -1}");
-                    break;
-                default:
-                    throw new ArgumentException("Type does not exist");
-            }
-
+            Console.WriteLine($"{Name} - Range : {Range} Damage : {Health * -1}");
         }
     }
 }

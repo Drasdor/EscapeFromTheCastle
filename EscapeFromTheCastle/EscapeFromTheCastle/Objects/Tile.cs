@@ -8,6 +8,8 @@ namespace EscapeFromTheCastle
     {
         private readonly char Base;
         private readonly Bag Chest;
+        private Character CharOnTile;
+        private char IndexOnTile = '9';
 
         public Tile(char bottom)
         {
@@ -22,11 +24,21 @@ namespace EscapeFromTheCastle
             }
         }
 
+        public void AddCharacter(Character c, char index)
+        {
+            CharOnTile = c;
+            IndexOnTile = index;
+        }
+
         public char GetChar()
         {
             if (Base == '|')
             {
                 return '|';
+            }
+            else if (CharOnTile != null)
+            {
+                return IndexOnTile;
             }
 
             return Base;
@@ -41,7 +53,11 @@ namespace EscapeFromTheCastle
                 'X' => ConsoleColor.DarkGray,
                 'C' => ConsoleColor.DarkYellow,
                 'D' => ConsoleColor.Cyan,
-                _ => throw new ArgumentException("Type does not exist"),
+                '0' => ConsoleColor.DarkGreen,
+                '1' => ConsoleColor.DarkGreen,
+                '2' => ConsoleColor.DarkGreen,
+                '3' => ConsoleColor.DarkGreen,
+                _ => throw new TypeNotFoundException("Type does not exist"),
             };
         }
     }

@@ -32,7 +32,7 @@ namespace EscapeFromTheCastle
             }
             else
             {
-                throw new ArgumentException("The bag is already full", "original");
+                throw new ArgumentException("The bag is already full");
             }
         }
 

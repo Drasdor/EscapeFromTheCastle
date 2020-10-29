@@ -13,7 +13,7 @@ namespace EscapeFromTheCastle
                 case "bleed":
                     break;
                 default:
-                    throw new ArgumentException("Type does not exist");
+                    throw new TypeNotFoundException("Type does not exist");
             }
         }
     }

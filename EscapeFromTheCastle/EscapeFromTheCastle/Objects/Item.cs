@@ -44,7 +44,7 @@ namespace EscapeFromTheCastle
                     Description = "An old key used to open a door, it'll work on one of these doors";
                     break;
                 default:
-                    throw new ArgumentException("Type does not exist");
+                    throw new TypeNotFoundException("Type does not exist");
             }
         }
 
@@ -62,7 +62,7 @@ namespace EscapeFromTheCastle
         {
             if (Used == true)
             {
-                throw new ArgumentException("Item already used");
+                throw new Exception("Item already used");
             }
             Used = true;
         }
@@ -92,7 +92,7 @@ namespace EscapeFromTheCastle
                     Health = 10;
                     break;
                 default:
-                    throw new ArgumentException("Type does not exist");
+                    throw new TypeNotFoundException("Type does not exist");
             }
         }
 
@@ -117,7 +117,7 @@ namespace EscapeFromTheCastle
                     Range = 1;
                     break;
                 default:
-                    throw new ArgumentException("Type does not exist");
+                    throw new TypeNotFoundException("Type does not exist");
             }
         }
     }

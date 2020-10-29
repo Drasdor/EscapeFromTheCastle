@@ -10,16 +10,12 @@ namespace EscapeFromTheCastle
     {
         static void Main()
         {
-            Door d = new Door(true, "vX72#sf");
-            Key k = new Key("vX72#sf");
-            Key k2 = new Key("VX72#sf");
-            d.Unlock(k);
-            d.Lock(k2);
+            Console.ForegroundColor = ConsoleColor.White;
             Item torch = new Item("torch");
             Weapon knife = new Weapon("knife");
             Food chicken = new Food("chicken");
             int playerNumber = 0;
-            string teamName = "";
+            string teamName;
 
             Console.WriteLine("Please enter a team name");
             teamName = Console.ReadLine();
@@ -46,18 +42,10 @@ namespace EscapeFromTheCastle
                 players.AddCharacter(name, "human");
                 players.AddToBag(i, torch);
                 players.AddToBag(i, knife);
-                Console.WriteLine();
             }
 
-            Character c = players.GetCharacter(0);
-            c.ModifyHealth(-50);
-            c.AddToBag(chicken);
-            c.EatIndex(2);
-            Console.WriteLine(c.GetHealth());
-            players.UpdateHealth();
-
-            Encounter entrance = new Encounter("entrance");
-            entrance.Run(players);
+            Encounter entrance = new Encounter("entrance", players);
+            entrance.Run();
 
             Console.ReadLine();
         }

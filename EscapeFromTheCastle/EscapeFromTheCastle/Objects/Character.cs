@@ -34,10 +34,10 @@ namespace EscapeFromTheCastle
                     MaxHealth = 100;
                     MaxBagSize = 5;
                     Backpack.SetSize(5);
-                    Actions.Add(new Action("firebolt"));
+                    Actions.Add(new Attack("firebolt"));
                     break;
                 default:
-                    throw new ArgumentException("Type does not exist");
+                    throw new DeathException("Type does not exist");
             }
         }
 
@@ -48,12 +48,17 @@ namespace EscapeFromTheCastle
             if (Health < 1)
             {
                 Health = 0;
-                throw new ArgumentException("Character has died");
+                throw new DeathException("Character has died");
             }
             if (Health > MaxHealth)
             {
                 Health = MaxHealth;
             }
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
 
         public int GetHealth()
@@ -85,7 +90,7 @@ namespace EscapeFromTheCastle
         {
             if (Location[0] + col < 0 || Location[0] + row < 0)
             {
-                throw new ArgumentException($"Move ({col}, {row}) takes player outside of room!", "original");
+                throw new ArgumentException($"Move ({col}, {row}) takes player outside of room!");
             }
 
             Location[0] = Location[0] + col;
@@ -131,7 +136,7 @@ namespace EscapeFromTheCastle
             return Door;
         }
 
-        public void ActionMenu()
+        public int ActionMenu()
         {
             do
             {
@@ -139,17 +144,43 @@ namespace EscapeFromTheCastle
                 {
                     Console.WriteLine("1 - Attack   2 - Use Item");
                     Console.WriteLine("3 - Move     4 - End Turn");
+                    Console.WriteLine("5 - See Map Key");
                     string input = Console.ReadLine();
-                    foreach (Action a in Actions)
+                    if (input == "1")
                     {
-                        a.ActionOption();
+                        foreach (Attack a in Actions)
+                        {
+                            a.ActionOption();
+                        }
                     }
+                    else if (input == "2")
+                    {
+                        
+                    }
+                    else if (input == "3")
+                    {
+
+                    }
+                    else if (input == "4")
+                    {
+
+                    }
+                    else if (input == "5")
+                    {
+                        return 5;
+                    }
+                    else
+                    {
+                        throw new InvalidUserInputException();
+                    }
+                    break;
                 }
                 catch
                 {
 
                 }
             } while (true);
+            return 0;
         }
     }
 }

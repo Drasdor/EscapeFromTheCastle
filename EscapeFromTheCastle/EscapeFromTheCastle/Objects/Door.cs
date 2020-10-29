@@ -20,7 +20,7 @@ namespace EscapeFromTheCastle
         {
             if (Code != k.Use())
             {
-                throw new Exception("Incorrect Key");
+                throw new ArgumentException("Incorrect Key");
             }
         }
 

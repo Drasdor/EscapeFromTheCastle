@@ -32,7 +32,7 @@ namespace EscapeFromTheCastle
                         Tile t = new Tile(line[i2]);
                         Tiles[i].Add(t);
                     }
-                    i = i + 1;
+                    i++;
                 }
             }
         }
@@ -47,6 +47,26 @@ namespace EscapeFromTheCastle
                     Console.Write(til.GetChar());
                 }
                 Console.WriteLine();
+            }
+        }
+
+        public void AddPlayers(Team players)
+        {
+            int i = 0;
+            foreach (List<Tile> row in Tiles)
+            {
+                foreach (Tile til in row)
+                {
+                    if (til.GetChar() == 'D')
+                    {
+                        til.AddCharacter(players.GetCharacter(i), Convert.ToChar(Convert.ToString(i)));
+                        i++;
+                        if (i == players.GetCount())
+                        {
+                            return;
+                        }
+                    }
+                }
             }
         }
 
